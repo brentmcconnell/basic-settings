@@ -11,13 +11,29 @@ if !exists("g:os")
     endif
 endif
 
+" {{ Install Colors
+if empty(glob("~/.vim/colors/Microsoft-Night.vim"))
+  silent !curl -fLo ~/.vim/colors/Microsoft-Night.vim --create-dirs
+      \ https://raw.githubusercontent.com/brentmcconnell/msft-night.vim/master/Microsoft-Night.vim 
+endif
+if empty(glob("~/.vim/colors/simple-dark.vim"))
+  silent !curl -fLo ~/.vim/colors/simple-dark.vim --create-dirs
+      \ https://raw.githubusercontent.com/zefei/simple-dark/master/colors/simple-dark.vim
+endif
+
+if empty(glob("~/.vim/colors/dogrun.vim"))
+  silent !curl -fLo ~/.vim/colors/dogrun.vim --create-dirs
+      \ https://raw.githubusercontent.com/wadackel/vim-dogrun/master/colors/dogrun.vim 
+endif
+
+colorscheme dogrun
+" }}}
+
 " Download vim-plug if not already installed
 if has('unix')
   if empty(glob('~/.vim/autoload/plug.vim'))
     silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
           \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    silent !curl -fLo ~/.vim/colors/Microsoft-Night.vim --create-dirs
-          \ https://raw.githubusercontent.com/brentmcconnell/msft-night.vim/master/Microsoft-Night.vim 
     autocmd VimEnter * PlugInstall | source $MYVIMRC
     silent !git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
     silent !~/.fzf/install

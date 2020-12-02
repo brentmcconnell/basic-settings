@@ -82,6 +82,7 @@ Plug 'hashivim/vim-terraform'                           " Terraform Syntax
 Plug 'christoomey/vim-system-copy'                      " Copy Paste mechanism to system clipboard
 Plug 'wincent/scalpel'                                  " Scalpel for search/replace:w
 Plug 'mg979/vim-visual-multi',{'branch': 'master'}      " Multiple cursors
+Plug 'PhilRunninger/nerdtree-visual-selection'          " Open multiple files at once with NERD
 call plug#end()
 
 syntax on
@@ -151,7 +152,8 @@ au BufRead,BufNewFile *.md,*.txt setlocal textwidth=80
 " My random keybindings... Mostly
 " {{{
   vmap <C-c> :'<,'>!pbcopy<CR><CR>                            " Copy visual selection 
-  imap ff <esc>
+  imap jk <esc>
+  imap kj <esc>
   nnoremap 9 <esc>^
   nnoremap <esc>^[ <esc>^[                                     " Fix bug related to tmux
   nnoremap q <Nop>
@@ -288,6 +290,10 @@ au BufRead,BufNewFile *.md,*.txt setlocal textwidth=80
     let g:NERDTreeAutoDeleteBuffer = 1
     let g:NERDTreeMinimalUI = 1
     let g:NERDTreeWinSize = 40
+    " The next 2 fix problems with moving around in tmux when NERDTree has
+    " focus
+    let g:NERDTreeMapJumpPrevSibling=""  
+    let g:NERDTreeMapJumpNextSibling=""
     let g:fzf_layout = { 'window': 'let g:launching_fzf = 1 | keepalt topleft 100split enew' }
 
     autocmd StdinReadPre * let s:std_in=1

@@ -127,8 +127,10 @@ au BufRead,BufNewFile *.md,*.txt setlocal textwidth=80
 
 " Custom color settings
 " {{{
-    if g:colors_name == "dogrun" "If using dogrun change search color
-      highlight Search ctermfg=grey
+    if exists("g:colors_name")
+      if g:colors_name == "dogrun" "If using dogrun change search color
+        highlight Search ctermfg=grey
+      endif
     endif
     set cursorline
     highlight clear CursorLine

@@ -1,6 +1,10 @@
 set nocompatible
 set clipboard=unnamedplus
 
+function! s:randnum(max) abort
+  return str2nr(matchstr(reltimestr(reltime()), '\v\.@<=\d+')[1:]) % a:max
+endfunction
+
 " Set variable used to identify which system we are on
 if !exists("g:os")
     " Set variable used to identify which system we are on    
@@ -12,10 +16,15 @@ if !exists("g:os")
 endif
 
 " {{ Install Colors
+" Let's do something fun here and randomize which colorscheme we get
+
+let s:scheme = ['Microsoft-Night','simple-dark','dogrun','darcula']
+
 if empty(glob("~/.vim/colors/Microsoft-Night.vim"))
   silent !curl -fLo ~/.vim/colors/Microsoft-Night.vim --create-dirs
       \ https://raw.githubusercontent.com/brentmcconnell/msft-night.vim/master/Microsoft-Night.vim 
 endif
+
 if empty(glob("~/.vim/colors/simple-dark.vim"))
   silent !curl -fLo ~/.vim/colors/simple-dark.vim --create-dirs
       \ https://raw.githubusercontent.com/zefei/simple-dark/master/colors/simple-dark.vim
@@ -26,7 +35,12 @@ if empty(glob("~/.vim/colors/dogrun.vim"))
       \ https://raw.githubusercontent.com/wadackel/vim-dogrun/master/colors/dogrun.vim 
 endif
 
-colorscheme dogrun
+if empty(glob("~/.vim/colors/darcula.vim"))
+  silent !curl -fLo ~/.vim/colors/darcula.vim --create-dirs
+      \ https://raw.githubusercontent.com/doums/darcula/master/colors/darcula.vim 
+endif
+
+execute 'colorscheme ' . s:scheme[s:randnum(4)]
 " }}}
 
 " Download vim-plug if not already installed
@@ -113,6 +127,9 @@ au BufRead,BufNewFile *.md,*.txt setlocal textwidth=80
 
 " Custom color settings
 " {{{
+    if g:colors_name == "dogrun" "If using dogrun change search color
+      highlight Search ctermfg=grey
+    endif
     set cursorline
     highlight clear CursorLine
     " Make sure cursorline is only in the active window
